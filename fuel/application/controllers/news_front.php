@@ -18,7 +18,7 @@ class News_front extends CI_Controller {
 	{	
 		$base_url = base_url();
 		$target_url = $base_url.'news/';
-		$filter = "";
+		$filter = " WHERE type='NEWS' ";
 		$total_rows = $this->news_front_model->get_total_rows($filter);
 		$config = $this->set_page->set_config($target_url, $total_rows, $dataStart, 10);
 		$dataLen = $config['per_page'];

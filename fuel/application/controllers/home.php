@@ -47,10 +47,10 @@ class Home extends CI_Controller {
 		$this->set_meta->set_meta_data();
 		$this->load->helper('menu');
 		// $pro_results = $this->product_model->get_pro_list(" AND (pro_promote='new' or pro_promote='hot') ","" );
-		$ad_results = $this->product_model->get_ad_data();
+		// $ad_results = $this->product_model->get_ad_data();
 		$pro_cate_result = get_menu();;
-		$lastest_news = $this->news_front_model->get_lastest_news();
-
+		$lastest_news = $this->news_front_model->get_lastest_news(); 
+	 	$img_results = $this->news_front_model->get_list(0, 100, " WHERE type='HOME' ");
 		foreach ($pro_cate_result as $key) {
 			$pro = $this->product_model->get_top_cate_pro($key->id);
 			if (isset($pro)) {
@@ -60,6 +60,8 @@ class Home extends CI_Controller {
 			}
 			
 		}
+
+		$vars['img_results'] = $img_results;
 		$vars['pro_cate_result'] = $pro_cate_result;
 
 		// print_r($pro_cate_result);
@@ -75,8 +77,8 @@ class Home extends CI_Controller {
 
 
 
-		$vars['ad_results'] = $ad_results;
-		$vars['system_time'] = date('Y/m/d h:y:s');
+		// $vars['ad_results'] = $ad_results;
+		// $vars['system_time'] = date('Y/m/d h:y:s');
 		// $vars['code_key'] = $code_key;
 
 		// use Fuel_page to render so it will grab all opt-in variables and do any necessary parsing

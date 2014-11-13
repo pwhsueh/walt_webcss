@@ -187,8 +187,8 @@
 			// store a namspace reference to .bx-viewport
 			slider.viewport = el.parent();
 			// add a loading div to display while images are loading
-			// slider.loader = $('<div class="bx-loading" />');
-			// slider.viewport.prepend(slider.loader);
+			slider.loader = $('<div class="bx-loading" />');
+			slider.viewport.prepend(slider.loader);
 			// set el to a massive width, to hold any needed slides
 			// also strip any margin and padding from el
 			el.css({
@@ -207,8 +207,7 @@
 			slider.viewport.css({
 				width: '100%',
 				overflow: 'hidden',
-				position: 'relative',
-				height:'240px'
+				position: 'relative'
 			});
 			slider.viewport.parent().css({
 				maxWidth: getViewportMaxWidth()

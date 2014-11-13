@@ -33,7 +33,7 @@
 				<?php //echo("212121212-".$member_id."-212121212"); ?>
 				<?php if (!$member_id): ?>
 					<li><a href="<?=site_url()?>login">會員登入</a></li><!--未登入顯示這個-->
-					<li><a href="<?=site_url()?>register">加⼊入會員</a></li>
+					<li><a href="<?=site_url()?>register">加入會員</a></li>
 				<?php else: ?>
 					<li><a href="<?=site_url()?>orders">訂單查詢</a></li><!--登入後顯示這個-->
 					<li><a href="<?php echo site_url()?>/user/logout" id="topmenu_10" title="登出">登出</a></li>
@@ -51,13 +51,14 @@
 				<?php $this->load->view('_blocks/cate_menu')?>
 			</div>
 			<br>
-		<iframe src="//www.facebook.com/plugins/likebox.php?href=https%3A%2F%2Fwww.facebook.com%2FFacebookDevelopers&amp;width=190&amp;height=290&amp;colorscheme=light&amp;show_faces=true&amp;header=true&amp;stream=false&amp;show_border=true&amp;appId=212312848898911" scrolling="no" frameborder="0" style="border:none; overflow:hidden; width:190px; height:290px;" allowTransparency="true"></iframe>
+		<iframe src="//www.facebook.com/plugins/likebox.php?href=https%3A%2F%2Fwww.facebook.com%2Fgotowalt&amp;width=190&amp;height=290&amp;colorscheme=light&amp;show_faces=true&amp;header=true&amp;stream=false&amp;show_border=true&amp;appId=212312848898911" scrolling="no" frameborder="0" style="border:none; overflow:hidden; width:190px; height:290px;" allowTransparency="true"></iframe>
+
 	<div id="footer">
 		<br>
 			Copyright © <br>
 			2014 華特燈飾有限公司<br>
 			台北市萬華區寶興街162號<br>    
-			0912-345-678<br> 
+			(02)2309-5195<br> 
 	</div>
 </div>
 <div id="right">

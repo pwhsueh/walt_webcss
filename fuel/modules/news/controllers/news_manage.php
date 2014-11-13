@@ -11,7 +11,7 @@ class News_manage extends Fuel_base_controller {
 		parent::__construct();
 		$this->_validate_user('news/manage');
 		$this->load->module_model(NEWS_FOLDER, 'news_manage_model');
-		// $this->load->module_model(CODEKIND_FOLDER, 'codekind_manage_model');
+		$this->load->module_model(CODEKIND_FOLDER, 'codekind_subcode_model');
 		$this->load->helper('ajax');
 		$this->load->library('pagination');
 		$this->load->library('set_page');
@@ -23,18 +23,18 @@ class News_manage extends Fuel_base_controller {
 	{
 		$base_url = base_url();
 
-		// $search_type = $this->input->get_post('search_type'); 
+		$search_type = $this->input->get_post('search_type'); 
 		// $search_lang = $this->input->get_post('search_lang'); 
 		
 		$filter = " WHERE 1=1  "; 
 
-		// if (!empty($search_type)) {
-		// 	$filter .= " AND type = '$search_type'"; 
-		// 	$this->session->set_userdata('search_type', $search_type);
-		// }else {
-		// 	$search_type = $this->session->userdata('search_type'); 
-		// 	$filter .= " AND type = '$search_type'";
-		// } 
+		if (!empty($search_type)) {
+			$filter .= " AND type = '$search_type'"; 
+			$this->session->set_userdata('search_type', $search_type);
+		}else {
+			$search_type = $this->session->userdata('search_type'); 
+			$filter .= " AND type = '$search_type'";
+		} 
 
 		// if (!empty($search_lang)) {
 		// 	$filter .= " AND lang = '$search_lang'"; 
@@ -55,12 +55,14 @@ class News_manage extends Fuel_base_controller {
 
 		$results = $this->news_manage_model->get_news_list($dataStart, $dataLen,$filter);
 
-		// $type = $this->codekind_manage_model->get_code_list_for_other_mod("NEWSTYPE");
+		$type = $this->codekind_subcode_model->get_code_list_for_other_mod("NEWSTYPE");
+		// print_r($type);
+		// die;
 		// $lang = $this->codekind_manage_model->get_code_list_for_other_mod("LANG_CODE");
 
 		// $vars['lang'] = $lang;
-		// $vars['type'] = $type;
-		// $vars['search_type'] = $search_type;
+		$vars['type'] = $type;
+		$vars['search_type'] = $search_type;
 		// $vars['search_lang'] = $search_lang;
 		$vars['total_rows'] = $total_rows; 
 		$vars['form_action'] = $base_url.'fuel/news/lists';
@@ -91,8 +93,8 @@ class News_manage extends Fuel_base_controller {
 		$vars['module_uri'] = base_url().$this->module_uri;
 		$vars['view_name'] = "新增";
 
-		// $type = $this->codekind_manage_model->get_code_list_for_other_mod("NEWSTYPE");
-		// $vars['type'] = $type;
+		$type = $this->codekind_subcode_model->get_code_list_for_other_mod("NEWSTYPE");
+		$vars['type'] = $type;
 
 		// $lang = $this->codekind_manage_model->get_code_list_for_other_mod("LANG_CODE");
 		// $vars['lang'] = $lang;
@@ -109,7 +111,7 @@ class News_manage extends Fuel_base_controller {
 		    mkdir($root_path, 0777, true);
 		}
 
-		$post_arr["type"] = '123';		
+		// $post_arr["type"] = '123';		
 		$post_arr["lang"] = 'zh-TW';
 		$post_arr["content"] = htmlspecialchars($post_arr["content"]);		
 
@@ -155,6 +157,10 @@ class News_manage extends Fuel_base_controller {
 			$this->plu_redirect(base_url().'fuel/news/lists', 0, "找不到資料");
 			die;
 		}
+		
+		$type = $this->codekind_subcode_model->get_code_list_for_other_mod("NEWSTYPE");
+		$vars['type'] = $type;
+
   
  		$vars['submit_url'] = base_url()."fuel/news/do_edit/$id";
 	    $vars['news'] = $news; 
@@ -174,7 +180,7 @@ class News_manage extends Fuel_base_controller {
 		} 
 		 
 		// $post_arr = $this->input->post();
-		$post_arr["type"] = '123';		
+		// $post_arr["type"] = '123';		
 		$post_arr["lang"] = 'zh-TW';
 		 
 		$this->upload->initialize($this->set_upload_options());

@@ -10,6 +10,23 @@ class Codekind_subcode_model extends MY_Model {
 		parent::__construct($tables['mod_code']); // table name
 	}
 
+	public function get_code_list_for_other_mod($codekind_key)
+	{
+		$sql = @"SELECT * FROM mod_code WHERE codekind_key=? AND parent_id=-1";
+		$para = array($codekind_key);
+		$query = $this->db->query($sql, $para);
+
+		if($query->num_rows() > 0)
+		{
+			$result = $query->result();
+
+			return $result;
+		}
+
+		return;
+
+	}
+
 	public function get_subcode($code_id)
 	{
 		$sql = @"SELECT a.id, a.code_name, b.codekind_name, a.code_value1, a.modi_time FROM mod_code a, mod_codekind b WHERE a.codekind_key=b.codekind_key AND a.parent_id=?";

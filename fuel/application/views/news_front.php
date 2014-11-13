@@ -10,7 +10,7 @@
 
         ?>
 <!--news_roll-->
-		<img src="<?php echo site_url()."assets/".$row->img ?>">	
+		<img style="max-width:730px" src="<?php echo site_url()."assets/".$row->img ?>">	
 		<br>
 		<h3><?php echo $row->title ?></h3>
 		<p style="color:gray; font-size:14px;"><?php echo $date2 ?></p>

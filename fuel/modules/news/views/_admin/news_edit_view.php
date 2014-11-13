@@ -1,7 +1,7 @@
 <?php echo css($this->config->item('news_css'), 'news')?> 
 <div id="main_content">
 	<div class="row" style="margin:10px 10px">
-	    <div class="span2 sheader"><h1>最新消息</h1></div>
+	    <div class="span2 sheader"><h1>上稿管理</h1></div>
 	    <div class="span11 sheader">
 	    </div>
 	</div>
@@ -9,7 +9,7 @@
 <div class="row" style="margin:10px 10px">
 	<div class="span12">
 		<ul class="breadcrumb">
-		  <li><a href="<?php echo $module_uri;?>">最新消息</a></li>
+		  <li><a href="<?php echo $module_uri;?>">上稿管理</a></li>
 		  <li class="active"><?php echo $view_name?></li>
 		</ul>
 	</div>
@@ -24,6 +24,25 @@
 					</tr>
 				</thead>
 				<tbody>
+					<tr>
+						<td>上稿類別
+						</td>
+						<td>
+							<div class="col-xs-5">
+								<select name="type" id="type">
+									<?php
+										if(isset($type)):
+									?>	
+									<?php   foreach($type as $key=>$rows):?>
+												<option value="<?php echo $rows->code_key ?>" <?php if ($rows->code_key==$news->type): ?>
+													selected
+												<?php endif ?>><?php echo $rows->code_name ?></option>
+										<?php endforeach;?>
+									<?php endif;?>
+								</select>
+							</div>
+						</td>
+					</tr>
 					<tr>
 						<td>日期</td>
 						<td>

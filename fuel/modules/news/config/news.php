@@ -5,7 +5,7 @@
 |--------------------------------------------------------------------------
 */
 $config['nav']['news'] = array(
-'news/lists'		=> '最新消息'
+'news/lists'		=> '上稿管理'
 );
 
 // deterines whether to use this configuration below or the database for controlling the blogs behavior

@@ -6,20 +6,24 @@
 	</div>
 
 	<div class="row" style="margin:10px 10px">
-	    <div class="col-md-2 sheader"><h2>最新消息</h2></div>
+	    <div class="col-md-2 sheader"><h2>上稿管理</h2></div>
 	    <div class="col-md-10 sheader">
-			<!-- <form class="form-inline" role="form" action="<?php echo $search_url?>" method="POST">
+			<form class="form-inline" role="form" action="<?php echo $form_action?>" method="POST">
 				<div class="form-group">
-					<select class="form-control input-sm" name="act">
-						<option value="by_name">依會員姓名</option>
-						<option value="by_email">email</option>
+					<select name="search_type">
+						<?php
+							if(isset($type)):
+						?>	
+						<?php   foreach($type as $key=>$rows):?>
+							<option value="<?php echo $rows->code_key ?>" <?php if ($search_type == $rows->code_key): ?>
+								selected
+							<?php endif ?>><?php echo $rows->code_name ?></option>
+						<?php endforeach;?>
+						<?php endif;?>
 					</select>
-				</div>
-				<div class="form-group">
-					<input type="text" class="form-control input-sm" placeholder="Search..." name="search_item"/>
-				</div>
+				</div>			 
 				<button type="submit" class="btn btn-info btn-sm">Search</button>
-			</form> -->
+			</form>
 	    </div>
 	</div>
 
@@ -51,8 +55,7 @@
 							</label>
 						</th> 
 						<th>日期</th>
-						<th>標題</th>
-						<th>內容</th>
+						<th>標題</th> 
 						<th>圖片</th> 
 						<th>刪除</th>
 					</tr>
@@ -79,8 +82,7 @@
 
                             ?>
 						</td>
-						<td><?php echo $rows->title?></td>
-						<td><?php echo substr($rows->content,0,100)."..."?></td>
+						<td><?php echo $rows->title?></td> 
 						<td>
 							<?php if (isset($rows->img) && !empty($rows->img)): ?>
 								<img style="width:150px" src="<?php echo site_url()."assets/".$rows->img?>" />
@@ -100,7 +102,7 @@
 					{
 					?>
 						<tr>
-							<td colspan="6">No results.</td>
+							<td colspan="5">No results.</td>
 						</tr>
 					<?php
 					}
