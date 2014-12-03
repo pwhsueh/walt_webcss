@@ -74,7 +74,7 @@ class Orders extends CI_Controller {
 		}
 
 		$total_amount = $this->core_model->get_order_total_amount($order_id);
-		$order_info->total_amount = round($total_amount * $member_info[0]->discount);
+		$order_info->total_amount = $total_amount;
 
 		// $target_url = $base_url.'orders/';
 		// $total_rows = $this->member_model->get_order_total_rows($member_id);

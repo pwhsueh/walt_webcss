@@ -163,10 +163,17 @@ class Payment extends CI_Controller {
 				if (isset($cart) && !empty($cart)) { 
 					$cart = stripslashes($cart);
 					$cart = json_decode($cart, true); 
+
+					$discount = 1; 
+					$member_info = $this->member_manage_model->get_member_detail($member_id);
+					if (isset($member_info) && sizeof($member_info) > 0 ) {
+						 $discount = $member_info[0]->discount;
+					}
+
 				    foreach ($cart as $row) {
 				   	// print_r($row['plan_id']);
 				    	$product_plan = $this->product_manage_model->get_product_plan($row['plan_id']);
-				    	$this->order_manage_model->add_order_dt($trade_no,$row['plan_id'],$row['num'],$product_plan->plan_price);
+				    	$this->order_manage_model->add_order_dt($trade_no,$row['plan_id'],$row['num'],round($product_plan->plan_price*$discount));
 				    }
 				    //remove cookie				    
 				    $this->load->helper('cookie'); 

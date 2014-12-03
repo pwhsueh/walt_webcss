@@ -34,50 +34,81 @@ class Prod extends CI_Controller {
 	function do_set_cart_info($pro_id,$plan_id,$num)
 	{ 
 		$cart = get_cookie("cart",TRUE);
-
+		//print_r(json_decode($cart, true) );
 		if (isset($cart) && !empty($cart)) { 
 			$cart = stripslashes($cart);
 			$cart = json_decode($cart, true); 
-		    $cart[$pro_id] = array('pro_id' => $pro_id ,'plan_id' => $plan_id ,'num' => $cart[$pro_id]['num'] + $num); 
+			$org_num = 0;
+			if(isset($cart[$pro_id])){
+				$org_num = $cart[$pro_id]['num'];
+			}
+		    $cart[$pro_id] = array('pro_id' => $pro_id ,'plan_id' => $plan_id ,'num' => $org_num + $num); 
+//echo "111111";
+		    // print_r($cart);
+		     //die;
 		    // $cart = $cart + $num;
 		}else{
 			$cart[$pro_id] = array('pro_id' => $pro_id ,'plan_id' => $plan_id ,'num' => $num);
 			// $cart = $num; 
+			//print_r($cart);
+		     //die;
 		}   
+
 		$json = json_encode($cart);
-		// print_r($json);
+		//print_r($json);
+	 	//die;
 		$config = array(
 			'name' => "cart",
 			'value' => $json,
 			'expire' => 0,
 			'path' => WEB_PATH
 		);
-		set_cookie($config); 
+		set_cookie($config);  
+
+// $cart = get_cookie("cart",TRUE);
+// print_r($cart);
+// die;
+
+		// return $json;	
 		// $this->comm->plu_redirect(base_url()."product/detail/$pro_id",0,'已加入購物車');
 	}
 
 	function cart(){
 
 		$this->load->module_library(FUEL_FOLDER, 'fuel_auth');
+		$this->load->module_model(MEMBER_FOLDER, 'member_manage_model');
 
 		$cart = get_cookie("cart",TRUE);
+
+		// print_r($cart);
+
 		$pro_cart = null;
 		if (isset($cart) && !empty($cart)) { 
 			$cart = stripslashes($cart);
 			$cart = json_decode($cart, true); 
 			$pro_ids = array_keys($cart);
 			$pro_ids = implode(",", $pro_ids);
+			//echo $pro_ids;
 			$pro_cart = $this->product_model->get_cart_pro_list($pro_ids);
 		}  
 
 	    $user_data = $this->fuel_auth->valid_user();
-        $member_id = isset($user_data['member_id'])?$user_data['member_id']:"";
+        $member_id = isset($user_data['member_id'])?$user_data['member_id']:""; 
+        $discount = 1;
+		if(isset($member_id) && $member_id != "")
+		{
+			$member_info = $this->member_manage_model->get_member_detail($member_id);
+			if (isset($member_info) && sizeof($member_info) > 0 ) {
+				 $discount = $member_info[0]->discount;
+			}
+		} 
 
         //bowen $member_id = 5;
 	 
 
-		// print_r($cart);
+		// print_r($pro_cart);
 		// die;
+		$vars['discount'] = $discount;
 		$vars['member_id'] = $member_id;
 		$vars['cart'] = $cart;
 	 	$vars['pro_cart'] = $pro_cart; 
@@ -92,11 +123,24 @@ class Prod extends CI_Controller {
 
 	function detail($pro_id)
 	{
+		$this->load->module_library(FUEL_FOLDER, 'fuel_auth');
+		$this->load->module_model(MEMBER_FOLDER, 'member_manage_model');
 		// $this->do_set_cart_info($pro_id,10);
 		// $cart = $this->input->cookie("cart_$pro_id",TRUE);
 		// print_r($cart);
 		// die;
 		$today = date("Y-m-d h:i:s");
+
+ 		$user_data = $this->fuel_auth->valid_user();
+        $member_id = isset($user_data['member_id'])?$user_data['member_id']:""; 
+		$discount = 1;
+		if(isset($member_id) && $member_id != "")
+		{
+			$member_info = $this->member_manage_model->get_member_detail($member_id);
+			if (isset($member_info) && sizeof($member_info) > 0 ) {
+				 $discount = $member_info[0]->discount;
+			}
+		} 
 		
 		$pro_detail_results = $this->product_model->get_pro_detail($pro_id);
 		// $pro_cate_result = $this->product_model->get_code("product_cate"," AND parent_id <> -1 " );
@@ -148,7 +192,7 @@ class Prod extends CI_Controller {
 			}
 
 			$vars['system_time'] = date('Y/m/d h:y:s');
-
+			$vars['discount'] = $discount;
 			$vars['prod_detail_url'] = base_url()."prod/detail/";
 			$vars['pro_selled_cnt'] = isset($sell_amt)?$sell_amt:0;
 			// use Fuel_page to render so it will grab all opt-in variables and do any necessary parsing

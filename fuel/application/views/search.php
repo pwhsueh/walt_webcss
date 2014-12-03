@@ -18,7 +18,7 @@
 <div class="cate_box">
   <img style="height:160px" src="<?php echo $base_url.$row->photo->ga_url?>">
   <span class="title"><?php echo $row->pro_name?></span><br>
-  <span class="price">$ <?php echo $row->pro_group_price ?></span><span class="sprice"><s>$<?php echo $row->pro_original_price?></s></span><br>
+  <span class="price">$ <?php echo round($row->pro_group_price*$discount) ?></span><span class="sprice"><s>$<?php echo $row->pro_group_price?></s></span><br>
   <a class="btn btn-default" href="<?php echo $prod_detail_url.$row->pro_id.".php"?>" role="button" style="float:right;">more</a>
   </div>
        

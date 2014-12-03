@@ -52,7 +52,7 @@ class Member_model extends CI_Model {
     }
 
     public function order_info($dataStart, $dataLen,$member_id){
-        $sql = @"SELECT a.order_id,b.order_time,d.pro_name,a.num * a.amount total_amount,
+        $sql = @"SELECT a.order_id,b.order_time,d.pro_name,a.num * a.amount AS total_amount ,
                 b.order_status,b.order_ship_status ,b.order_note,b.account
                 FROM mod_order_detail a
                 LEFT JOIN mod_order b ON a.order_id = b.order_id

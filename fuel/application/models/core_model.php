@@ -21,6 +21,18 @@ public function do_update_fbid2resume($account,$fbid){
         else
             return false;  //電腦版
     }
+
+    public function get_all_session_data()
+    {
+
+        //$query=$this->db->select('user_data')->get('ci_sessions');
+
+        $query = '';
+         return $query;
+
+
+    }
+
     public function send_mail_by_id($id,$target=""){
 
         $sql = @" SELECT * FROM mod_edm WHERE edm_id = ? LIMIT 1";

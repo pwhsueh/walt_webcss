@@ -43,9 +43,9 @@ if (isset($pro_plan_results)) {
         <?php echo $pro_detail_results->pro_summary?>
       </div>
       <div class="product_price">
-      <p class="sprice"><s>原價：NT$<?php echo $pro_detail_results->pro_original_price?></s></p>
-      <p class="price">會員價：NT$<?php echo $price?></p>
-      <p class="sprice">現省：<?php echo $pro_detail_results->pro_original_price - $price?></p>
+      <p class="sprice"><s>原價：NT$<?php echo $price?></s></p>
+      <p class="price">會員價：NT$<?php echo round($price*$discount)?></p>
+      <p class="sprice">現省：<?php echo $price - round($price*$discount)?></p>
       數量
       
       <select class="form-control" id="num">

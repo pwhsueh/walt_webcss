@@ -20,7 +20,7 @@
       <th scope="col">出貨狀態</th>
       <th scope="col">匯款回報</th>
     </tr>
-  
+    <?php $temp_order_id=""; ?>
     <?php if (isset($order_result) && sizeof($order_result) > 0 ): ?>
     <?php foreach ($order_result as $key => $value): ?>
     <?php 
@@ -31,7 +31,7 @@
       <td><?php echo $value->order_id ?></td>
       <td><?php echo $date2 ?></td>
       <td><?php echo $value->pro_name ?></td>
-      <td><?php echo round($value->total_amount * $member_info[0]->discount) ?></td> 
+      <td><?php echo $value->total_amount ?></td> 
       <td>
         <?php if ($value->order_status == "order_status_0002"): ?>
           已確認
@@ -48,7 +48,13 @@
       </td>
       <td>
         <?php if (!isset($value->account) || $value->account == ''): ?>
-          <a href="<?php echo site_url()."orders/report/".$value->order_id ?>">匯款回報</a>
+          
+          <?php if ($temp_order_id != $value->order_id): ?>
+            <?php $temp_order_id = $value->order_id; ?>
+            <a href="<?php echo site_url()."orders/report/".$value->order_id ?>">匯款回報</a>
+          <?php else: ?>
+
+          <?php endif ?>
         <?php else: ?>
           已回報匯款
         <?php endif ?>

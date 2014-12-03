@@ -129,12 +129,26 @@ class Home extends CI_Controller {
 
 	function category($pro_cate)
 	{	
+		$this->load->module_library(FUEL_FOLDER, 'fuel_auth');
+		$this->load->module_model(MEMBER_FOLDER, 'member_manage_model');
+
 		$this->url_checker();
 		$this->set_meta->set_meta_data();
 		$pro_results = $this->product_model->get_pro_list(" AND pro_cate='$pro_cate' ","" );
 		$ad_results = $this->product_model->get_ad_data();
 		$pro_cate_result = $this->product_model->get_code("product_cate"," AND id ='$pro_cate' " );
 
+
+		$user_data = $this->fuel_auth->valid_user();
+		$member_id = isset($user_data['member_id'])?$user_data['member_id']:"";
+		$discount = 1;
+		if(isset($member_id) && $member_id != "")
+		{
+			$member_info = $this->member_manage_model->get_member_detail($member_id);
+			if (isset($member_info) && sizeof($member_info) > 0 ) {
+				 $discount = $member_info[0]->discount;
+			}
+		} 
 
 		// print_r($pro_results);
 		// die;
@@ -151,6 +165,7 @@ class Home extends CI_Controller {
 		$vars['pro_cate'] = $pro_cate;
 
 		// use Fuel_page to render so it will grab all opt-in variables and do any necessary parsing
+		$vars['discount'] = $discount;
 		$vars['views'] = 'category';
 		$vars['prod_detail_url'] = base_url()."prod/detail/";
 		$vars['pro_cate_result'] = $pro_cate_result[0]; 
@@ -163,6 +178,9 @@ class Home extends CI_Controller {
 
 	function search($keyword)
 	{	
+
+		$this->load->module_library(FUEL_FOLDER, 'fuel_auth');
+		$this->load->module_model(MEMBER_FOLDER, 'member_manage_model');
 		// $this->url_checker();
 		$keyword = urldecode($keyword);
 		$this->set_meta->set_meta_data();
@@ -176,7 +194,20 @@ class Home extends CI_Controller {
 		{
 			$vars['pro_results'] = array();
 		}
-	 
+
+		$user_data = $this->fuel_auth->valid_user();
+		$member_id = isset($user_data['member_id'])?$user_data['member_id']:"";
+		$discount = 1;
+		if(isset($member_id) && $member_id != "")
+		{
+			$member_info = $this->member_manage_model->get_member_detail($member_id);
+			if (isset($member_info) && sizeof($member_info) > 0 ) {
+				 $discount = $member_info[0]->discount;
+			}
+		} 
+
+
+	 	$vars['discount'] = $discount;
 		$vars['system_time'] = date('Y/m/d h:y:s');
 		$vars['keyword'] = $keyword;
 		$vars['views'] = 'search';

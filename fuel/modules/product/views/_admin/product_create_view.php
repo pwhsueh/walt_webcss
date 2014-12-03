@@ -640,11 +640,11 @@
 				        	</script>			
 						</td>
 					</tr>
-					<tr>
+					<tr style="display:none">
 						<td>*產品原價</td>
 						<td>
 							<div class="col-xs-5">
-								<input type="text" class="form-control input-sm" name="pro_original_price" id="pro_original_price" value="" required/>
+								<input type="text" class="form-control input-sm" name="pro_original_price" id="pro_original_price" value="" />
 							</div>
 						</td>
 					</tr>
@@ -652,7 +652,7 @@
 						<td >*產品團購價</td>
 						<td>
 							<div class="col-xs-5">
-							<input type="text" class="form-control input-sm" name="pro_group_price" id="pro_group_price" value="" required/>
+							<input type="text" class="form-control input-sm" name="pro_group_price" id="pro_group_price" value="" />
 							</div>
 						</td>
 					</tr>

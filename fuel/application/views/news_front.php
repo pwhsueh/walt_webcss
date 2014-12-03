@@ -15,7 +15,7 @@
 		<h3><?php echo $row->title ?></h3>
 		<p style="color:gray; font-size:14px;"><?php echo $date2 ?></p>
 		<p>
-			<?php echo $row->content ?>
+			<?php echo htmlspecialchars_decode($row->content) ?>
 		</p>
 	<hr>
 	<?php endforeach ?>

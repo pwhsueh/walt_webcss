@@ -563,7 +563,7 @@
 				        	</script>			
 						</td>
 					</tr>
-					<tr>
+					<tr  style="display:none">
 						<td>產品原價</td>
 						<td>
 							<div class="col-xs-5">

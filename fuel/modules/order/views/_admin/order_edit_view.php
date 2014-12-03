@@ -324,7 +324,7 @@
 					<?php endforeach ?>
 					<tr>
 						<td colspan="4">
-							共 <?php echo $sum ?> * <?php echo $discount ?> = <?php echo round($sum*$discount); ?>
+							共  <?php echo $sum; ?>
 						</td>
 					</tr>
 				</tbody>

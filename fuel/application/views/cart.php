@@ -22,13 +22,13 @@
             <tr>
               <?php 
                 $num = $cart[$value->pro_id]["num"]; 
-                $price = $value->plan_price;
+                $price = round($value->plan_price*$discount);
                 $total_price += $price * $num;
               ?>
               <td valign="center"><img style="width:128px" src='<?php echo $value->photo->ga_url ?>'></td>
               <td valign="center"><?php echo $value->pro_name ?></td>
               <td valign="center"><?php echo $num ?></td>
-              <td valign="center"><?php echo $value->plan_price ?></td>
+              <td valign="center"><?php echo $price?></td>
               <td valign="center"><?php echo $price*$num ?></td>
               <td valign="center"><img class="cancel_img" data-planid='<?php echo $value->plan_id; ?>' data-proid='<?php echo $value->pro_id; ?>' src="<?php echo site_url() ?>templates/import/cart_cancel.png"> 取消</td>
               
