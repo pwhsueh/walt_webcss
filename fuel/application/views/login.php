@@ -90,7 +90,7 @@
               if(data.status == 1)
               {
                 // sendForm.submit();
-                location.href = '<?php echo site_url() ?>payment';
+                location.href = '<?php echo site_url() ?>orders';
               }
               else
               {
