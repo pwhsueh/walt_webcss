@@ -10,6 +10,7 @@ class Orders extends CI_Controller {
 		$this->load->library('pagination');
 		$this->load->library('set_page');
 		$this->load->library('comm');
+		$this->load->library('email');
 	}
 
 	function index($dataStart=0)
@@ -130,6 +131,8 @@ class Orders extends CI_Controller {
 					// $total_amount = $this->core_model->get_order_total_amount($order_id); 
 					$success = $this->core_model->order_report($order_id,$member_id,$account,$account_nm,$mailing_date,$mailing_amount);
 					if ($success) {
+						$user_mail = $this->core_model->get_user_mail_by_id($member_id);
+						$this->send_mail($user_mail);
 						$result['status'] = 1;
 						$result['msg'] = "匯款回報成功";
 					}else{
@@ -156,6 +159,88 @@ class Orders extends CI_Controller {
 		}
 
 		die();
+ 	}
+
+ 	function send_mail($email){
+ 		$managers = $this->core_model->get_manager_mail();
+		 
+		$subject = "匯款回報通知"; //信件標題 
+		 
+		$msg_user = "
+
+		<html xmlns='http://www.w3.org/1999/xhtml'>
+		<head>
+		<meta http-equiv='Content-Type' content='text/html; charset=UTF-8' />
+		<title>Untitled Document</title>
+		</head>
+
+		<body>
+		<p><a href='http://walt.com.tw/'><img src='http://walt.com.tw/templates/import/logo.png' alt='' border='0' /></a>
+		</p>
+		<p>您好，我們已收到您的匯款回報</p>
+		<p>您可以至以下網址登入系統查看您的訂單進度</p>
+		<p><a href=''http://walt.com.tw/login' target='_blank'>http://walt.com.tw/login</a></p>
+		<p>謝謝您</p>
+		<p>**********<br />
+		此為系統自動寄出郵件，請勿直接回覆</p>
+		<p>2015 華特燈飾<br />
+		  台北市萬華區寶興街162號<br />
+		(02)2309-5195</p>
+		</body>
+		</html>
+
+
+		";
+
+		$msg_manager = "
+ 
+	 
+		<html xmlns='http://www.w3.org/1999/xhtml'>
+		<head>
+		<meta http-equiv='Content-Type' content='text/html; charset=UTF-8' />
+		<title>Untitled Document</title>
+		</head>
+
+		<body>
+		<p><a href='http://walt.com.tw/'><img src='http://walt.com.tw/templates/import/logo.png' alt=' border='0' /></a>
+		</p>
+		<p>有新的匯款回報。</p>
+		<p>您可以至以下網址登入系統查看</p>
+		<p><a href='http://walt.com.tw/login' target='_blank'>http://walt.com.tw/fuel/order/lists</a></p>
+		<p>謝謝您</p>
+		<p>**********<br />
+		此為系統自動寄出郵件，請勿直接回覆</p>
+		<p>2015 華特燈飾<br />
+		  台北市萬華區寶興街162號<br />
+		(02)2309-5195</p>
+		</body>
+		</html>
+
+
+		";
+
+		if (isset($managers)) {
+			foreach ($managers as $row) {
+				$email = $row->code_value1; 
+
+				$this->email->from('xuan-1121@hotmail.com', 'walt-華特燈飾');
+				$this->email->to($email); 
+
+				$this->email->subject($subject);
+				// $this->email->message(fuel_block('contact_content'));
+				$this->email->message($msg_manager);
+
+				
+				$success = $this->email->send();
+			}
+		}
+
+		$this->email->from('xuan-1121@hotmail.com', 'walt-華特燈飾');	 
+		$this->email->to($email); 
+		$this->email->subject($subject); 
+		$this->email->message($msg_user);
+		
+		$success = $this->email->send();
  	}
 	
 }

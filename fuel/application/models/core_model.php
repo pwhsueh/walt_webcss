@@ -823,4 +823,34 @@ public function do_update_fbid2resume($account,$fbid){
         return;
     }
 
+     public function get_manager_mail()
+    {
+        $sql = @"SELECT code_value1 FROM mod_code WHERE id=?";
+        $para = array('MailAdm');
+        $query = $this->db->query($sql, $para);
+
+        if($query->num_rows() > 0)
+        { 
+
+            return $query->result();
+        }
+
+        return;
+    }
+
+     public function get_user_mail_by_id($member_id)
+    {
+        $sql = @"SELECT member_account FROM mod_member WHERE member_id=?";
+        $para = array($member_id);
+        $query = $this->db->query($sql, $para);
+
+        if($query->num_rows() > 0)
+        { 
+            $row = $query->row();
+            return $row->member_account;
+        }
+
+        return;
+    }
+
 }

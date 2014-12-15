@@ -360,6 +360,22 @@ class Order_manage_model extends MY_Model {
 		return;
 	}
 
+	public function get_order_emails($order_ids)
+	{
+		$sql = @"SELECT order_email FROM mod_order WHERE order_id IN ($order_ids) AND order_email is not null AND order_email != '' ";
+		 
+		$query = $this->db->query($sql);
+		// print_r($sql);
+		// die;
+		if($query->num_rows() > 0)
+		{
+			$result = $query->result();
+
+			return $result;
+		}
+
+	}
+
 	public function update_ship_status($order_ids, $status)
 	{
 		$sql = @"UPDATE mod_order SET order_ship_status=?, modi_time=NOW() WHERE order_id IN ($order_ids)";

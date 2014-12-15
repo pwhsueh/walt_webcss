@@ -16,6 +16,7 @@ class Order_manage extends Fuel_base_controller {
 		$this->load->helper('ajax');
 		$this->load->library('pagination');
 		$this->load->library('set_page');
+		$this->load->library('email');
 		$this->uri->init_get_params();
 	}
 	
@@ -318,6 +319,15 @@ class Order_manage extends Fuel_base_controller {
 					$success = $this->order_manage_model->update_ship_status($im_order_ids, 'ship_status_0002');
 					//$ex_order_id = explode(",", $order_ids);
 					$this->send_ship_note($im_order_ids);
+					//mail
+					$mail_ary = $this->order_manage_model->get_order_emails($im_order_ids);
+					// print_r($mail_ary);
+					// die;
+					foreach ($mail_ary as $key => $value) {
+						// print_r($value);
+						$this->send_mail($value->order_email);
+					}
+				    
 					break;
 				case 'o_un_shiped':
 					$success = $this->order_manage_model->update_ship_status($im_order_ids, 'ship_status_0001');
@@ -482,5 +492,44 @@ class Order_manage extends Fuel_base_controller {
 	        $objWriter->save('php://output');
 		
 	}
+
+	function send_mail($email){
+ 		 
+		 
+		$subject = "訂單出貨"; //信件標題 
+		 
+		$msg_user = "
+		
+		<html xmlns='http://www.w3.org/1999/xhtml'>
+		<head>
+		<meta http-equiv='Content-Type' content='text/html; charset=UTF-8' />
+		<title>Untitled Document</title>
+		</head>
+
+		<body>
+		<p><a href='http://walt.com.tw/'><img src='http://walt.com.tw/templates/import/logo.png' alt='' border='0' /></a>
+		</p>
+		<p>您好，您的訂單已經出貨</p>
+		<p>您可以至以下網址登入系統查看您的訂單</p>
+		<p><a href='http://walt.com.tw/login' target='_blank'>http://walt.com.tw/login</a></p>
+		<p>謝謝您</p>
+		<p>**********<br />
+		此為系統自動寄出郵件，請勿直接回覆</p>
+		<p>2015 華特燈飾<br />
+		  台北市萬華區寶興街162號<br />
+		(02)2309-5195</p>
+		</body>
+		</html>
+
+		"; 
+
+
+		$this->email->from('xuan-1121@hotmail.com', 'walt-華特燈飾');	 
+		$this->email->to($email); 
+		$this->email->subject($subject); 
+		$this->email->message($msg_user);
+		
+		$success = $this->email->send();
+ 	}
 
 }
