@@ -110,6 +110,16 @@ class Member_manage_model extends MY_Model {
 		return;
 	}
 
+	public function do_edit_member_info($member_id, $member_account, $member_name, $member_mobile, $member_addr, $vat_num, $inv_title, $member_city)
+	{
+		$sql = @"UPDATE mod_member SET member_account=?,member_name=?,member_mobile=?,member_addr=?,vat_number=?, invoice_title=?, member_city=?, modi_time=NOW() WHERE member_id=?";
+
+		$para = array($member_account, $member_name, $member_mobile, $member_addr, $vat_num, $inv_title, $member_city, $member_id);
+		$success = $this->db->query($sql, $para);
+
+		return $success;
+	}
+
 	public function do_edit_member($member_type, $member_id, $member_account, $member_name, $member_mobile, $member_addr, $vat_num, $inv_title, $member_city)
 	{
 		$sql = @"UPDATE mod_member SET member_type=?,member_account=?,member_name=?,member_mobile=?,member_addr=?,vat_number=?, invoice_title=?, member_city=?, modi_time=NOW() WHERE member_id=?";

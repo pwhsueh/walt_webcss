@@ -47,7 +47,6 @@ class Home extends CI_Controller {
 		$this->set_meta->set_meta_data();
 		$this->load->helper('menu');
 		// $pro_results = $this->product_model->get_pro_list(" AND (pro_promote='new' or pro_promote='hot') ","" );
-		// $ad_results = $this->product_model->get_ad_data();
 		$pro_cate_result = get_menu();;
 		$lastest_news = $this->news_front_model->get_lastest_news(); 
 	 	$img_results = $this->news_front_model->get_list(0, 100, " WHERE type='HOME' ");
@@ -82,6 +81,7 @@ class Home extends CI_Controller {
 		// $vars['code_key'] = $code_key;
 
 		// use Fuel_page to render so it will grab all opt-in variables and do any necessary parsing
+		$vars['user_count'] = sizeof($this->core_model->get_all_session_data());
 		$vars['views'] = 'product';
 		$vars['lastest_news'] = $lastest_news;
 		$vars['prod_detail_url'] = base_url()."category/";
@@ -255,7 +255,7 @@ class Home extends CI_Controller {
 
 
 				$this->email->from('waltcomt@walt.com.tw');
-				$this->email->to('waltcomt@walt.com.tw'); 
+				$this->email->to('xuan-1121@hotmail.com'); 
 
 				$this->email->subject($name.'-聯絡我們');
 				$this->email->message($msg);

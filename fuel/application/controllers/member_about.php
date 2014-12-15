@@ -8,7 +8,7 @@ class Member_about extends CI_Controller {
 		$this->load->helper('url');
 		$this->load->helper('ajax');
 		// $this->load->library('pagination');
-		// $this->load->library('set_page');
+		$this->load->library('comm');
 		$this->load->module_library(FUEL_FOLDER, 'fuel_auth');
 	}
 
@@ -127,7 +127,7 @@ class Member_about extends CI_Controller {
 
 	function edit($dataStart=0)
 	{
-		$this->load->library('pagination');
+		// $this->load->library('pagination');
 		$this->load->module_library(PRODUCT_FOLDER, 'my_page');
 		$this->load->module_model(ORDER_FOLDER, 'order_manage_model');
 		$this->load->module_model(MEMBER_FOLDER, 'member_manage_model');
@@ -148,7 +148,8 @@ class Member_about extends CI_Controller {
 		}
 		else
 		{
-			$vars['is_logined'] = -1;
+			$this->comm->plu_redirect(site_url(), 0, "發生異常錯誤，請重新登入");
+			die;
 		}
 
 		$vars['login_url'] = base_url()."user/login";
@@ -226,7 +227,7 @@ class Member_about extends CI_Controller {
 			$member_pass = $this->input->get_post("member_pass");
 			$member_chk_pass = $this->input->get_post("member_chk_pass");
 
-			$success = $this->member_manage_model->do_edit_member($member_id, $member_account, $member_name, $member_mobile, $member_addr, $vat_num, $inv_title, $member_city);
+			$success = $this->member_manage_model->do_edit_member_info($member_id, $member_account, $member_name, $member_mobile, $member_addr, $vat_num, $inv_title, $member_city);
 
 			if($success)
 			{

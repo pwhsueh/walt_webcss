@@ -55,8 +55,40 @@
 
 	<div id="footer">
 		<br>
+		<!--online-->
+
+<?php
+//首先你要有讀寫檔的許可權
+//本程式可以直接運行,第一次報錯,以後就可以
+  $online_log = "count.dat"; //儲存人數的檔,
+  $timeout = 600;//600秒內沒動作者,認為掉線
+  $entries = file($online_log);
+
+  $temp = array();
+ 
+  for ($i=0;$i<count($entries);$i++) {
+   $entry = explode(",",trim($entries[$i]));
+   if (($entry[0] != getenv('REMOTE_ADDR')) && ($entry[1] > time())) {
+    array_push($temp,$entry[0].",".$entry[1]." "); //取出其他流覽者的資訊,並去掉逾時者,儲存進$temp
+   }
+  }
+
+   array_push($temp,getenv('REMOTE_ADDR').",".(time() + ($timeout))." "); //更新流覽者的時間
+  $users_online = count($temp); //計算線上人數
+
+  $entries = implode("",$temp);
+  //寫入檔案
+  $fp = fopen($online_log,"w");
+   flock($fp,LOCK_EX); //flock() 不能在NFS以及其他的一些網路檔系統中標準工作
+   fputs($fp,$entries);
+   flock($fp,LOCK_UN);
+   fclose($fp);
+
+   echo "線上人數：".$users_online;
+ ?>
+			<br>
 			Copyright © <br>
-			2014 華特燈飾有限公司<br>
+			2015 華特燈飾<br>
 			台北市萬華區寶興街162號<br>    
 			(02)2309-5195<br> 
 	</div>

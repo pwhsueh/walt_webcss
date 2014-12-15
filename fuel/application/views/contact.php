@@ -27,7 +27,9 @@
     <tr>
       <td>&nbsp;</td>
       <td align="right" valign="top">聯絡內容：</td>
-      <td><input type="textarea" id="content" name="content" class="form-control" style="height:200px;"></td>
+      <td>
+        <textarea id="content" name="content" class="form-control" style="height:200px;"></textarea>
+      </td>
     </tr>
     <tr>
       <td>&nbsp;</td>
