@@ -192,7 +192,9 @@ class Payment extends CI_Controller {
 			{
 				if($pwd == $chk_pwd)
 				{
-					$member_id = $this->member_manage_model->do_add_member($order_email, $pwd, $order_name, $order_mobile, $order_city, $order_addr, $vat_number, $invoice_title);
+				    $member_type_result = $this->product_manage_model->get_code('MT', " AND code_key='NORMAL' AND parent_id=-1 ORDER BY code_key ASC");
+					$member_type = $member_type_result[0]->id;
+					$member_id = $this->member_manage_model->do_add_member($member_type,$order_email, $pwd, $order_name, $order_mobile, $order_city, $order_addr, $vat_number, $invoice_title);
 					if($member_id)
 					{
 						$success = $this->fuel_auth->front_login($order_email, $pwd);
