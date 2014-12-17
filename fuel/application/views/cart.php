@@ -1,5 +1,18 @@
   
- 
+ <?php 
+           if(isset($this->fuel_auth))
+            {
+              $session_key = $this->fuel_auth->get_session_namespace();
+              $user_data = $this->session->userdata($session_key);
+            }
+            else if(isset($CI->fuel_auth))
+            {
+              $session_key = $CI->fuel_auth->get_session_namespace();
+              $user_data = $CI->session->userdata($session_key);
+            }
+            
+            $member_id = isset($user_data['member_id'])?$user_data['member_id']:"";
+       ?>
 
 <img src="<?php echo site_url() ?>templates/import/banner_1.png"> 
     <br><br>
@@ -50,9 +63,11 @@
               <td valign="center" style="font-size:16px;">消費金額</td>
               <td valign="center"><span style="color:red;font-size:16px;"><?php echo $total_price ?></span></td>
               <td colspan="3" align="right" valign="center" style="line-height:70px;">
-               
+              <?php if (!$member_id): ?>
                 <button onclick='javascript:location.href="<?php echo site_url() ?>payment"' type="button" class="btn btn-default">初次購物</button> 
-                <button onclick='javascript:location.href="<?php echo site_url() ?>login"' id="login_btn"  type="button" class="btn btn-primary">登入結賬去</button>
+              <?php else: ?>                
+                <button onclick='javascript:location.href="<?php echo site_url() ?>login"' id="login_btn"  type="button" class="btn btn-primary">結賬去</button>
+              <?php endif ?>  
               </td> 
             </tr>
         <?php else: ?>

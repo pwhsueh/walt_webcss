@@ -825,7 +825,7 @@ public function do_update_fbid2resume($account,$fbid){
 
      public function get_manager_mail()
     {
-        $sql = @"SELECT code_value1 FROM mod_code WHERE id=?";
+        $sql = @"SELECT code_value1 FROM mod_code WHERE codekind_key=?";
         $para = array('MailAdm');
         $query = $this->db->query($sql, $para);
 
