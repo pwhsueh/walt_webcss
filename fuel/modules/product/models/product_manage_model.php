@@ -32,14 +32,32 @@ class Product_manage_model extends MY_Model {
 
 	public function get_product_list($dataStart, $dataLan, $filter)
 	{
-		$sql = @"SELECT a.pro_id, a.pro_name, a.pro_add_time, a.pro_off_time, a.modi_time, b.code_name, COUNT(c.order_id) AS sell_cnt, SUM(c.order_price) AS sell_amt, click_num 
-				FROM mod_product AS a
-				INNER JOIN mod_code AS b ON a.pro_cate=b.id 
-				LEFT JOIN mod_order AS c ON c.product_id = a.pro_id AND c.RtnCode=1 
-				".$filter."
-				GROUP BY a.pro_id
-				ORDER BY a.modi_time DESC
-				LIMIT $dataStart, $dataLan"; 
+		// $sql = @"SELECT a.pro_id, a.pro_name, a.pro_add_time, a.pro_off_time, a.modi_time, b.code_name, COUNT(c.order_id) AS sell_cnt, SUM(c.order_price) AS sell_amt, click_num 
+		// 		FROM mod_product AS a
+		// 		INNER JOIN mod_code AS b ON a.pro_cate=b.id 
+		// 		LEFT JOIN mod_order AS c ON c.product_id = a.pro_id AND c.RtnCode=1 
+		// 		".$filter."
+		// 		GROUP BY a.pro_id
+		// 		ORDER BY a.modi_time DESC
+		// 		LIMIT $dataStart, $dataLan"; 
+		$sql = "SELECT a.pro_id,
+	       a.pro_name,
+	       a.pro_add_time,
+	       a.pro_off_time,
+	       a.modi_time,
+	       b.code_name,
+	       (SELECT count(*) FROM `mod_order_detail` c left join mod_plan d on c.plan_id = d.plan_id where d.pro_id = a.pro_id) AS sell_cnt,
+		   (SELECT Sum(c.num*c.amount) FROM `mod_order_detail` c left join mod_plan d on c.plan_id = d.plan_id where d.pro_id = a.pro_id)  AS sell_amt,	       
+	       click_num
+		   FROM   mod_product AS a
+	       INNER JOIN mod_code AS b
+	               ON a.pro_cate = b.id
+	       
+	       ".$filter."
+		   GROUP  BY a.pro_id
+		   ORDER  BY a.modi_time DESC 
+			";
+
 		$query = $this->db->query($sql);
 
 		if($query->num_rows() > 0)

@@ -21,7 +21,7 @@ class Payment extends CI_Controller {
 		// $plan_id = $this->input->get_post("pro_plan");
 		$user_data = $this->fuel_auth->valid_user();
 		//bowen 先寫死 $member_id = 5;
-		$member_id = isset($user_data['member_id'])?$user_data['member_id']:$user_data['user_name'];
+		$member_id = isset($user_data['member_id'])?$user_data['member_id']:"";
 		$city_result = $this->product_manage_model->get_code('city', ' AND parent_id=-1 ORDER BY code_key ASC');
 		$ship_time_result = $this->product_manage_model->get_code('ship_time', ' AND parent_id=-1 ORDER BY code_key ASC');
 		
