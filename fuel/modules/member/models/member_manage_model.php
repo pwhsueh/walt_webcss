@@ -80,7 +80,7 @@ class Member_manage_model extends MY_Model {
 					);
 		$query = $this->db->query($sql, $para);
 
-		iif($query->num_rows() > 0)
+		if($query->num_rows() > 0)
 		{			
 			return true;
 		}

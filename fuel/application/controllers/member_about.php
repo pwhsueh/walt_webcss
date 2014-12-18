@@ -304,7 +304,7 @@ class Member_about extends CI_Controller {
 		{
 			$member_type_result = $this->product_manage_model->get_code('MT', " AND code_key='NORMAL' AND parent_id=-1 ORDER BY code_key ASC");
 			$member_type = $member_type_result[0]->id;
-			$exists = $this->member_manage_model->check_member_exist($order_email);
+			$exists = $this->member_manage_model->check_member_exist($member_email);
 			if ($exists) {
 				$result['status'] = -1;
 				$result['msg'] = "此EMAIL已存在";
