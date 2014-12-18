@@ -65,8 +65,9 @@
               <td colspan="3" align="right" valign="center" style="line-height:70px;">
               <?php if (!$member_id): ?>
                 <button onclick='javascript:location.href="<?php echo site_url() ?>payment"' type="button" class="btn btn-default">初次購物</button> 
+                <button onclick='javascript:location.href="<?php echo site_url() ?>login/true"' id="login_btn"  type="button" class="btn btn-primary">結賬去</button>
               <?php else: ?>                
-                <button onclick='javascript:location.href="<?php echo site_url() ?>login"' id="login_btn"  type="button" class="btn btn-primary">結賬去</button>
+                <button onclick='javascript:location.href="<?php echo site_url() ?>login/true"' id="login_btn"  type="button" class="btn btn-primary">結賬去</button>
               <?php endif ?>  
               </td> 
             </tr>

@@ -61,6 +61,7 @@ $route['member/edit'] = 'member_about/edit';
 // $route['order/add'] = 'member_about/add';
 $route['forget'] = 'member_about/forget_pass';
 $route['login'] = 'home/login';
+$route['login/(:any)'] = 'home/login/$1';
 $route['cate_menu'] = 'home/cate_menu';
 $route['contact'] = 'home/contact';
 $route['do_contact'] = 'home/do_contact';

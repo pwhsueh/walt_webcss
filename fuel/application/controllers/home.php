@@ -93,7 +93,7 @@ class Home extends CI_Controller {
 		$this->fuel_page->render(FALSE, FALSE); //第二個FALSE為在前台不顯示ADMIN BAR
 	}
  
-	function login()
+	function login($go_payment=false)
 	{	
 		$this->load->helper('cookie');
 		$this->load->library('facebook'); 
@@ -117,6 +117,7 @@ class Home extends CI_Controller {
 
 		// print_r($member_id);
 		// die;
+		$vars['go_payment'] = $go_payment;	 
 		$vars['member_id'] = $member_id;	  
 		$vars['login_url'] = base_url()."user/login";
 		$vars['base_url'] = base_url();

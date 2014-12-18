@@ -89,8 +89,14 @@
               console.log(data);
               if(data.status == 1)
               {
+                i
                 // sendForm.submit();
-                location.href = '<?php echo site_url() ?>orders';
+                <?php if ($go_payment): ?>
+                   location.href = '<?php echo site_url() ?>payment';
+                <?php else: ?>
+                   location.href = '<?php echo site_url() ?>orders';
+                <?php endif ?>
+               
               }
               else
               {
