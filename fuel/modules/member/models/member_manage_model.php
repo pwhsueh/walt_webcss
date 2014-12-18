@@ -72,6 +72,22 @@ class Member_manage_model extends MY_Model {
 		return;
 	}
 
+	public function check_member_exist($member_account)
+	{
+		$sql = @"SELECT * FROM mod_member WHERE member_account=?";
+		$para = array(
+						$member_account
+					);
+		$query = $this->db->query($sql, $para);
+
+		iif($query->num_rows() > 0)
+		{			
+			return true;
+		}
+
+		return false;
+	}
+
 	public function do_add_member($member_type,$member_account, $member_pass, $member_name, $member_mobile, $member_city, $member_addr, $vat_num, $inv_title)
 	{
 		$sql = @"INSERT INTO mod_member (member_type,

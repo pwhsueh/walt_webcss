@@ -194,42 +194,48 @@ class Payment extends CI_Controller {
 				{
 				    $member_type_result = $this->product_manage_model->get_code('MT', " AND code_key='NORMAL' AND parent_id=-1 ORDER BY code_key ASC");
 					$member_type = $member_type_result[0]->id;
-					$member_id = $this->member_manage_model->do_add_member($member_type,$order_email, $pwd, $order_name, $order_mobile, $order_city, $order_addr, $vat_number, $invoice_title);
-					if($member_id)
-					{
-						$success = $this->fuel_auth->front_login($order_email, $pwd);
-						$session_key = $this->fuel_auth->get_session_namespace();
-						$user_data = $this->session->userdata($session_key);
-						$config = array(
-							'name' => $this->fuel_auth->get_fuel_trigger_cookie_name(), 
-							'value' => serialize(array('id' => $this->fuel_auth->user_data('id'), 'language' => $this->fuel_auth->user_data('language'))),
-							'expire' => 0,
-							'path' => WEB_PATH
-						);
-						set_cookie($config);
-						//$trade_no = $this->order_manage_model->create_empty_order($member_id, $order_email, $order_name, $order_mobile, $order_city, $order_addr, $vat_number, $invoice_title, $order_addressee_name, $order_addressee_addr, $order_addressee_mobile, $product_plan, $order_ship_time);
-
-						$trade_no = $this->order_manage_model->create_empty_order($member_id, $order_email, $order_name, $order_mobile, $order_city, $order_addr, $vat_number, $invoice_title, $order_addressee_name, $order_addressee_addr, $order_addressee_mobile, $product_plan, $order_ship_time);
-						$cart = get_cookie("cart",TRUE);
-						if (isset($cart) && !empty($cart)) { 
-							$cart = stripslashes($cart);
-							$cart = json_decode($cart, true); 
-						    foreach ($cart as $row) { 
-						    	$product_plan = $this->product_manage_model->get_product_plan($row['plan_id']);
-						    	$this->order_manage_model->add_order_dt($trade_no,$row['plan_id'],$row['num'],$product_plan->plan_price);
-						    }		
-						    //remove cookie				    
-						    $this->load->helper('cookie'); 
+					$exists = $this->member_manage_model->check_member_exist($order_email);
+					if ($exists) {
+						$result['status'] = -1;
+						$result['msg'] = "此EMAIL已存在";
+					}else{						
+						$member_id = $this->member_manage_model->do_add_member($member_type,$order_email, $pwd, $order_name, $order_mobile, $order_city, $order_addr, $vat_number, $invoice_title);
+						if($member_id)
+						{
+							$success = $this->fuel_auth->front_login($order_email, $pwd);
+							$session_key = $this->fuel_auth->get_session_namespace();
+							$user_data = $this->session->userdata($session_key);
 							$config = array(
-								'name' => 'cart',
+								'name' => $this->fuel_auth->get_fuel_trigger_cookie_name(), 
+								'value' => serialize(array('id' => $this->fuel_auth->user_data('id'), 'language' => $this->fuel_auth->user_data('language'))),
+								'expire' => 0,
 								'path' => WEB_PATH
 							);
-							delete_cookie($config);
-						} 
-						$this->send_mail($order_email);
-					}
+							set_cookie($config);
+							//$trade_no = $this->order_manage_model->create_empty_order($member_id, $order_email, $order_name, $order_mobile, $order_city, $order_addr, $vat_number, $invoice_title, $order_addressee_name, $order_addressee_addr, $order_addressee_mobile, $product_plan, $order_ship_time);
 
-					$result['status'] = 1;
+							$trade_no = $this->order_manage_model->create_empty_order($member_id, $order_email, $order_name, $order_mobile, $order_city, $order_addr, $vat_number, $invoice_title, $order_addressee_name, $order_addressee_addr, $order_addressee_mobile, $product_plan, $order_ship_time);
+							$cart = get_cookie("cart",TRUE);
+							if (isset($cart) && !empty($cart)) { 
+								$cart = stripslashes($cart);
+								$cart = json_decode($cart, true); 
+							    foreach ($cart as $row) { 
+							    	$product_plan = $this->product_manage_model->get_product_plan($row['plan_id']);
+							    	$this->order_manage_model->add_order_dt($trade_no,$row['plan_id'],$row['num'],$product_plan->plan_price);
+							    }		
+							    //remove cookie				    
+							    $this->load->helper('cookie'); 
+								$config = array(
+									'name' => 'cart',
+									'path' => WEB_PATH
+								);
+								delete_cookie($config);
+							} 
+							$this->send_mail($order_email);
+						}
+
+						$result['status'] = 1;
+					}
 				}
 				else
 				{

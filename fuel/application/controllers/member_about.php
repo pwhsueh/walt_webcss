@@ -304,15 +304,21 @@ class Member_about extends CI_Controller {
 		{
 			$member_type_result = $this->product_manage_model->get_code('MT', " AND code_key='NORMAL' AND parent_id=-1 ORDER BY code_key ASC");
 			$member_type = $member_type_result[0]->id;
-			$member_id = $this->member_manage_model->do_add_member($member_type,$member_email, $member_pwd, $member_name, $member_mobile, $member_city, $member_addr, $vat_number, $invoice_title);
-			if($member_id)
-			{
-				$success = $this->fuel_auth->front_login($member_email, $member_pwd); 
-				$result['status'] = 1;
-				$result['msg'] = "加入會員成功";
-			}else{
+			$exists = $this->member_manage_model->check_member_exist($order_email);
+			if ($exists) {
 				$result['status'] = -1;
-				$result['msg'] = "加入會員發生異常錯誤，請稍候再試";
+				$result['msg'] = "此EMAIL已存在";
+			}else{
+				$member_id = $this->member_manage_model->do_add_member($member_type,$member_email, $member_pwd, $member_name, $member_mobile, $member_city, $member_addr, $vat_number, $invoice_title);
+				if($member_id)
+				{
+					$success = $this->fuel_auth->front_login($member_email, $member_pwd); 
+					$result['status'] = 1;
+					$result['msg'] = "加入會員成功";
+				}else{
+					$result['status'] = -1;
+					$result['msg'] = "加入會員發生異常錯誤，請稍候再試";
+				}
 			}
 		}
 		else
