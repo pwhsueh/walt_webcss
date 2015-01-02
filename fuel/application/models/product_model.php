@@ -248,7 +248,9 @@ class Product_model extends CI_Model {
 
     function get_selled_cnt($pro_id)
     {
-        $sql = @"SELECT COUNT(*) AS cnt FROM mod_product mp, mod_order mo WHERE mp.pro_id=mo.product_id AND pro_id=?";
+        $sql = @"SELECT sum(a.num) AS cnt FROM mod_order_detail a
+                LEFT JOIN mod_plan b on a.plan_id = b.plan_id
+                WHERE pro_id=?";
         $para = array($pro_id);
         $query = $this->db->query($sql, $para);
 
@@ -259,7 +261,7 @@ class Product_model extends CI_Model {
             return $row;
         }
 
-        return;
+        return 0;
     }
 
     function get_ad_data()

@@ -106,7 +106,7 @@ class Order_manage_model extends MY_Model {
 	{
 		$today = date("Ymd");
 		$num = $this->get_conut_order();
-		$num = (int)$num + 1;
+		$num = $num + 1;
 		$tmp = str_pad($num,4,'0',STR_PAD_LEFT);
 
 		$order_id = $today.$tmp;
@@ -244,7 +244,7 @@ class Order_manage_model extends MY_Model {
 		$date_start = $today." 00:00:00";
 		$date_end = $today." 23:59:59";
 
-		$sql = @"SELECT order_id FROM mod_order WHERE order_time >= ? AND order_time <= ? ORDER BY order_time DESC";
+		$sql = @"SELECT count(order_id) as count FROM mod_order WHERE order_time >= ? AND order_time <= ? ORDER BY order_time DESC";
 		$para = array($date_start, $date_end);
 		$query = $this->db->query($sql, $para);
 
@@ -252,7 +252,7 @@ class Order_manage_model extends MY_Model {
 		{
 			$row = $query->row();
 
-			return substr($row->order_id, 8,12);
+			return $row->count;
 		}
 
 		return 0;

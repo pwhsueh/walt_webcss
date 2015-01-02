@@ -89,7 +89,7 @@
               console.log(data);
               if(data.status == 1)
               {
-                i
+               
                 // sendForm.submit();
                 <?php if ($go_payment): ?>
                    location.href = '<?php echo site_url() ?>payment';

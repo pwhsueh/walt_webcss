@@ -32,6 +32,7 @@
     <td align="right">確認密碼：</td>
     <td><input type="password" class="form-control" id="chk_pwd" ></td>
   </tr>  
+
   <?php endif ?>
   
  <!--  <tr>
@@ -96,7 +97,7 @@
     </tr>
   <tr>
     <td>&nbsp;</td>
-    <td align="right">訂購人姓名：</td>
+    <td align="right">收件人姓名：</td>
     <td><input type="text" class="form-control" name="order_addressee_name" id="order_addressee_name" ></td>
   </tr>
   <tr>
@@ -185,9 +186,66 @@
         }
 
 
+      if($("#order_name").val() == "")
+      {
+        alert("請輸入訂購人名稱");
+
+        return false;
+      }    
+      else if($("#order_mobile").val() == "")
+      {
+        alert("請輸入手機");
+
+        return false;
+      }
+      else if($("#order_addr").val() == "")
+      {
+        alert("請輸入收件人地址");
+
+        return false;
+      }
+      else if($("#order_email").val() == "")
+      {
+        alert("請輸入收件人郵件");
+
+        return false;
+      }
+      else if(ValidEmail($("#order_email").val()) == false)
+      {
+        alert("收件人郵件格式錯誤");
+
+        return false;
+      }
+
+
+  <?php if (!$is_logined): ?>
+  
+      if($("#pwd").val() == "")
+      {
+        alert("請輸入密碼");
+
+        return false;
+      }
+      else if($("#chk_pwd").val() == "")
+      {
+        alert("請輸入確認密碼");
+
+        return false;
+      }
+      else if($("#pwd").val() != $("#chk_pwd").val())
+      {
+        alert("密碼不一致");
+
+        return false;
+      }
+
+  <?php endif ?>
+
+
+
       if($("#order_addressee_name").val() == "")
       {
-        alert("請輸入收件人名稱");
+        alert("請輸入收件人姓名");
 
         return false;
       }
@@ -203,12 +261,7 @@
 
         return false;
       }
-      else if(ValidEmail($("#order_email").val()) == false)
-      {
-        alert("email 格式錯誤");
-
-        return false;
-      }
+      
 
        $.ajax({
           url: url,

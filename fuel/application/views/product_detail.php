@@ -5,7 +5,7 @@ $num = 0;
 
 if (isset($pro_plan_results)) {
   $price = $pro_plan_results->plan_price;
-  $num = $pro_plan_results->plan_num;
+  $num = $pro_plan_results->plan_num - $pro_selled_cnt;
 }
 
 ?> 
@@ -22,17 +22,23 @@ if (isset($pro_plan_results)) {
     </script>
     <div id="productbanner">
       <ul class="bxslider">
-        <?php foreach ($pro_photo_data as $key => $value): ?>
-          <li><img style="width:500px" src="<?php echo $base_url.$value->ga_url?>" /></li>
-        <?php endforeach ?>        
+        <?php if (isset($pro_photo_data)): ?>
+           <?php foreach ($pro_photo_data as $key => $value): ?>
+            <li><img style="width:500px" src="<?php echo $base_url.$value->ga_url?>" /></li>
+          <?php endforeach ?>     
+        <?php endif ?>
+          
       </ul>
     </div>
     <div class="pager-holder">
       <div id="bx-pager"> 
         <?php $i=0; ?>
-        <?php foreach ($pro_photo_data as $key => $value): ?>
-          <a data-slide-index="<?php echo $i++; ?>" href=""><img style="width:100px" src="<?php echo $base_url.$value->ga_url?>" /></a> 
-        <?php endforeach ?>    
+        <?php if (isset($pro_photo_data)): ?>
+          <?php foreach ($pro_photo_data as $key => $value): ?>
+            <a data-slide-index="<?php echo $i++; ?>" href=""><img style="width:100px" src="<?php echo $base_url.$value->ga_url?>" /></a> 
+          <?php endforeach ?>    
+        <?php endif ?>
+      
       </div>
     </div>
     <div id="clear"></div>

@@ -158,7 +158,8 @@ class Prod extends CI_Controller {
 			$pro_photo = $this->product_model->get_pro_photo_url($pro_id, 'product');
 			$pro_selled_cnt = $this->product_model->get_selled_cnt($pro_id);
 
-			$sell_amt = $pro_detail_results->pro_start_sell + $pro_selled_cnt->cnt;
+			$sell_amt =  $pro_selled_cnt->cnt;
+			// $sell_amt = $pro_detail_results->pro_start_sell + $pro_selled_cnt->cnt;
 
 			if(isset($pro_detail_results))
 			{ 
