@@ -11,3 +11,8 @@
 <!-- bxSlider CSS file -->
 <link href="css/jquery.bxslider.css" rel="stylesheet" />
 <script src="js/bootstrap.min.js"></script>
+<!-- CSS files -->
+<link rel="stylesheet" type="text/css" href="css/jquery.jqzoom.css">
+ 
+<!-- Js Files -->
+<script type='text/javascript' src='js/jquery.jqzoom-core.js'></script> 

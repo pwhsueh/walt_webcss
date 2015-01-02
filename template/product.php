@@ -16,13 +16,41 @@
 					});
 			});
 		</script>
+		<!--新增的scriptjqzoom-->
+		<script type="text/javascript">
+        $(document).ready(function() {
+         
+                var options = {  
+                  zoomType: 'innerzoom',  
+                  lens:true,  
+                  preloadImages: true,  
+                  alwaysOn:false,  
+                  zoomWidth: 300,  
+                  zoomHeight: 250,  
+                  xOffset:0,  
+                  yOffset:0,  
+                  position:''  ,
+                  showEffect:'fadein',
+                  hideEffect:'fadein',
+
+                  //...MORE OPTIONS  
+               };
+				 
+               $('.jqzoom1').jqzoom(options); 
+
+        });
+</script>
+		
 		<div id="productbanner">
 			<ul class="bxslider">
-			  <li><img src="http://placehold.it/500x500&text=bigA" /></li>
+			<!---jqzoom-->
+			  <li><a href="http://placehold.it/500x500&text=bigB" class="jqzoom1" title="MYTITLE"><img src="http://placehold.it/500x500&text=bigB" width="500" height="500"  /></a></li>
+			  <!--新增的jqzoom-->
 			  <li><img src="http://placehold.it/500x500&text=bigB" /></li>
 			  <li><img src="http://placehold.it/500x500&text=bigC" /></li>
 			  <li><img src="http://placehold.it/500x500&text=bigD" /></li>
 			  <li><img src="http://placehold.it/500x500&text=bigE" /></li>
+
 			</ul>
 		</div>
 		<div class="pager-holder">

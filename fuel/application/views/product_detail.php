@@ -10,21 +10,14 @@ if (isset($pro_plan_results)) {
 
 ?> 
  
-
+<link rel="stylesheet" type="text/css" href="<?php echo site_url() ?>templates/css/jquery.jqzoom.css">
   
-<script type="text/javascript">
-        $(document).ready(function(){
-          $('.bxslider').bxSlider({
-            mode: 'fade',
-              pagerCustom: '#bx-pager'
-          });
-      });
-    </script>
+ 
     <div id="productbanner">
       <ul class="bxslider">
         <?php if (isset($pro_photo_data)): ?>
            <?php foreach ($pro_photo_data as $key => $value): ?>
-            <li><img style="width:500px" src="<?php echo $base_url.$value->ga_url?>" /></li>
+            <li><a href="<?php echo $base_url.$value->ga_url?>" class="jqzoom1" ><img style="width:500px" src="<?php echo $base_url.$value->ga_url?>" /></a></li>
           <?php endforeach ?>     
         <?php endif ?>
           
@@ -85,6 +78,9 @@ if (isset($pro_plan_results)) {
   </div> 
 </div>
 
+ 
+<!-- Js Files -->
+<script type='text/javascript' src='<?php echo site_url() ?>templates/js/jquery.jqzoom-core.js'></script> 
 <script type="text/javascript">
   $(document).ready(function() {
      $('#buyit').on("click", function (e) {
@@ -99,6 +95,29 @@ if (isset($pro_plan_results)) {
             alert('商品缺貨中！');
         }
      });
+
+      $('.bxslider').bxSlider({
+            mode: 'fade',
+              pagerCustom: '#bx-pager'
+          });
+
+      var options = {  
+                zoomType: 'innerzoom',  
+                lens:true,  
+                preloadImages: true,  
+                alwaysOn:false,  
+                zoomWidth: 300,  
+                zoomHeight: 250,  
+                xOffset:0,  
+                yOffset:0,  
+                position:''  ,
+                showEffect:'fadein',
+                hideEffect:'fadein',
+                title: false
+                //...MORE OPTIONS  
+             };
+       
+             $('.jqzoom1').jqzoom(options); 
   });
 </script>
    
