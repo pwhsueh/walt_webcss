@@ -213,7 +213,7 @@ class Product_model extends CI_Model {
 
     function get_pro_photo_url($pro_id, $prog_id)
     {
-        $sql = @"SELECT ga_url, ga_w, ga_h FROM mod_gallery WHERE f_id=? AND prog_id=? limit 0,5 ";
+        $sql = @"SELECT ga_url, ga_w, ga_h FROM mod_gallery WHERE f_id=? AND prog_id=? order by ga_name limit 0,5 ";
         $para = array($pro_id, $prog_id);
         $query = $this->db->query($sql, $para);
         

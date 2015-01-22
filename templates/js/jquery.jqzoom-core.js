@@ -561,7 +561,7 @@
                   });
                   $('.zoomWrapperImage', this.node).css({
                       width: '100%',
-                      height: Math.round(settings.zoomHeight) + 'px'
+                      height: Math.round(settings.zoomHeight)<500?500:Math.round(settings.zoomHeight) + 'px'
                   });
                   //zoom title
                  $('.zoomWrapperTitle', this.node).css({

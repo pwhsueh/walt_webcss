@@ -28,7 +28,7 @@ if (isset($pro_plan_results)) {
         <?php $i=0; ?>
         <?php if (isset($pro_photo_data)): ?>
           <?php foreach ($pro_photo_data as $key => $value): ?>
-            <a data-slide-index="<?php echo $i++; ?>" href=""><img style="width:100px" src="<?php echo $base_url.$value->ga_url?>" /></a> 
+            <a data-slide-index="<?php echo $i++; ?>" href="" ><img style="width:100px" src="<?php echo $base_url.$value->ga_url?>" /></a> 
           <?php endforeach ?>    
         <?php endif ?>
       
@@ -96,12 +96,7 @@ if (isset($pro_plan_results)) {
         }
      });
 
-      $('.bxslider').bxSlider({
-            mode: 'fade',
-              pagerCustom: '#bx-pager'
-          });
-
-      var options = {  
+       var options = {  
                 zoomType: 'innerzoom',  
                 lens:true,  
                 preloadImages: true,  
@@ -116,8 +111,15 @@ if (isset($pro_plan_results)) {
                 title: false
                 //...MORE OPTIONS  
              };
+
+      $('.bxslider').bxSlider({
+            mode: 'fade',
+            pagerCustom: '#bx-pager'
+          });
+
+    $('.jqzoom1').jqzoom(options); 
        
-             $('.jqzoom1').jqzoom(options); 
+             
   });
 </script>
    
