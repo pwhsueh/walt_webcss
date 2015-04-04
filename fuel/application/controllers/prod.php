@@ -104,7 +104,8 @@ class Prod extends CI_Controller {
 		} 
 
         //bowen $member_id = 5;
-	 
+	 	$freight = $this->product_model->get_code_info('Freight','FREIGHT');
+	 	$vars['freight'] = $freight;
 
 		// print_r($pro_cart);
 		// die;

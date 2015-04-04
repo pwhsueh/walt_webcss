@@ -62,6 +62,20 @@ class Product_model extends CI_Model {
         return;
     }
 
+    public function get_code_info($codekind_key,$code_key, $filter="")
+    {
+        $sql = @"SELECT id,code_name, code_key, code_value1,code_value2 FROM mod_code WHERE codekind_key=? AND code_key=?".$filter;
+        $para = array($codekind_key,$code_key);
+        $query  = $this->db->query($sql, $para);
+
+        if($query->num_rows() > 0)
+        {
+            return $query->row();
+        }
+
+        return;
+    }
+
     public function get_top_cate_pro($pro_cate)
     {
         $sql = @"SELECT * FROM mod_product WHERE pro_cate=? ";

@@ -48,16 +48,20 @@
             </tr>
             <?php endforeach ?>
              <!--最下面的運費-->
-          <!--   <tr>
-              <td valign="center"><img src="<?php echo site_url() ?>templates/import/cart_icon_1.png"></td>
-              <td valign="center">運費（滿2000免運）</td>
+            <tr>
+              <td valign="center"><img src="<?php echo site_url() ?>assets/images/cart_icon_1.png"></td>
+              <td valign="center">運費（滿<?php echo $freight->code_value1 ?>免運）</td>
               <td valign="center">&nbsp;  </td>
                 <td valign="center"></td>
-              <td valign="center">150</td>
+              <td valign="center"><?php echo $freight->code_value2 ?></td>
               <td valign="center">&nbsp; </td>
-            </tr> -->
+            </tr>
             <!--繼續借用表格的加總-->
-        
+            <?php 
+                if ($total_price < $freight->code_value1) {
+                  $total_price += $freight->code_value2;
+                }
+            ?>
             <tr>
               <td valign="center"><img src="<?php echo site_url() ?>templates/import/cart_money.png"></td>
               <td valign="center" style="font-size:16px;">消費金額</td>
