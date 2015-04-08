@@ -53,7 +53,13 @@
               <td valign="center">運費（滿<?php echo $freight->code_value1 ?>免運）</td>
               <td valign="center">&nbsp;  </td>
                 <td valign="center"></td>
-              <td valign="center"><?php echo $freight->code_value2 ?></td>
+              <td valign="center">
+                <?php if ($total_price < $freight->code_value1): ?>
+                  <?php echo $freight->code_value2 ?>
+                <?php else: ?>
+                  0
+                <?php endif ?>                
+              </td>
               <td valign="center">&nbsp; </td>
             </tr>
             <!--繼續借用表格的加總-->
