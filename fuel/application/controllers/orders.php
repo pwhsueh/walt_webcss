@@ -75,10 +75,11 @@ class Orders extends CI_Controller {
 		}
 
 		$total_amount = $this->core_model->get_order_total_amount($order_id);
+		$count = $this->core_model->get_order_count($order_id);
 
 		$freight = $this->product_model->get_code_info('Freight','FREIGHT');
 		if ($total_amount < $freight->code_value1) {
-			$total_amount+=$freight->code_value2;
+			$total_amount+=$freight->code_value2 * $count;
 		}
 
 		$order_info->total_amount = $total_amount;

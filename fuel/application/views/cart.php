@@ -55,7 +55,7 @@
                 <td valign="center"></td>
               <td valign="center">
                 <?php if ($total_price < $freight->code_value1): ?>
-                  <?php echo $freight->code_value2 ?>
+                  <?php echo $freight->code_value2 * sizeof($pro_cart)?>
                 <?php else: ?>
                   0
                 <?php endif ?>                
@@ -65,7 +65,7 @@
             <!--繼續借用表格的加總-->
             <?php 
                 if ($total_price < $freight->code_value1) {
-                  $total_price += $freight->code_value2;
+                  $total_price += $freight->code_value2 * sizeof($pro_cart);
                 }
             ?>
             <tr>

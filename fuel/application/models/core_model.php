@@ -783,6 +783,23 @@ public function do_update_fbid2resume($account,$fbid){
         return 0;
     }
 
+    public function get_order_count($order_id)
+    {
+        $sql = @"SELECT COUNT(*) as count
+                 FROM mod_order_detail WHERE order_id=? ";
+        $para = array($order_id);
+        $query = $this->db->query($sql, $para);
+
+        if($query->num_rows() > 0)
+        {
+            $row = $query->row();
+
+            return $row->count;
+        }
+
+        return 0;
+    }
+
      public function order_report($order_id,$member_id,$account,$account_nm,$mailing_date,$mailing_amount)
     {
         $sql = @"UPDATE mod_order SET account=?,account_nm=?,mailing_date=?,mailing_amount=?,modi_time=NOW() WHERE order_id=? AND member_id=? ";
