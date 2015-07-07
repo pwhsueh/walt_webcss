@@ -1,4 +1,15 @@
- 
+  <!--WIS CODE-->
+<!-- Google Tag Manager -->
+
+<noscript><iframe src="//www.googletagmanager.com/ns.html?id=GTM-WC2NLQ"
+height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+<script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+'//www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+})(window,document,'script','dataLayer','GTM-WC2NLQ');</script>
+<!-- End Google Tag Manager -->
+<!--WIS CODE--> 
  <?php 
 $price = 0; 
 $num = 0;
@@ -14,14 +25,18 @@ if (isset($pro_plan_results)) {
   
  
     <div id="productbanner">
-      <ul class="bxslider">
+      <div class="bxslider">
         <?php if (isset($pro_photo_data)): ?>
            <?php foreach ($pro_photo_data as $key => $value): ?>
-            <li><a href="<?php echo $base_url.$value->ga_url?>" class="jqzoom1" ><img style="width:500px" src="<?php echo $base_url.$value->ga_url?>" /></a></li>
+
+                  <a href="<?php echo $base_url.$value->ga_url?>" class="jqzoom1" >
+                  <img style="width:500px;height:500px;" src="<?php echo $base_url.$value->ga_url?>" /><!--必須設定寬高-->
+                  </a>
+
           <?php endforeach ?>     
         <?php endif ?>
           
-      </ul>
+      </div>
     </div>
     <div class="pager-holder">
       <div id="bx-pager"> 
@@ -39,10 +54,10 @@ if (isset($pro_plan_results)) {
       <iframe src="//www.facebook.com/plugins/like.php?href=https%3A%2F%2Fwww.facebook.com%2Fgotowalt&amp;width&amp;layout=standard&amp;action=like&amp;show_faces=false&amp;share=true&amp;height=35&amp;appId=212312848898911" scrolling="no" frameborder="0" style="border:none; overflow:hidden; height:35px;" allowTransparency="true"></iframe>
       <h2><?php echo $pro_detail_results->pro_name?></h2>
       <div class="product_text">
-        <?php echo $pro_detail_results->pro_summary?>
+        <?php echo nl2br($pro_detail_results->pro_summary) ?>
       </div>
       <div class="product_price">
-      <p class="sprice"><s>原價：NT$<?php echo $price?></s></p>
+      <p class="sprice">原價：NT$<?php echo $price?></p>
       <p class="price">會員價：NT$<?php echo round($price*$discount)?></p>
       <p class="sprice">現省：<?php echo $price - round($price*$discount)?></p>
       數量
@@ -67,7 +82,7 @@ if (isset($pro_plan_results)) {
         <li ><a href="#pro_ship_note" role="tab" data-toggle="tab">購買須知</a></li>
     </ul>
 <div class="tab-content">
-   <div class="tab-pane active product_content" id="pro_desc">
+   <div class="tab-pane active product_content" id="pro_desc" style="margin-left:25px;">
       　<?php echo htmlspecialchars_decode($pro_detail_results->pro_desc)?>
     </div>
   <div class="tab-pane product_content" id="pro_format">
