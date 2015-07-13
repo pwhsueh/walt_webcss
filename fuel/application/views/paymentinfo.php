@@ -89,6 +89,17 @@
     <td align="right">發票抬頭：</td>
     <td><input type="text" class="form-control" value="<?php echo isset($member_result->invoice_title)? $member_result->invoice_title:''?>" id="invoice_title" name="invoice_title" ></td>
   </tr>
+   <tr>
+    <td>&nbsp;</td>
+    <td align="right">付款方式：</td>
+    <td>
+        <select name="pay_way" id="pay_way">
+          <?php foreach ($pay_result as $key): ?>
+             <option value="<?php echo $row->code_value1?>"><?php echo $key->code_name?></option>
+          <?php endforeach ?>
+        </select>
+    </td>
+  </tr>  
   <tr>
     <td><img src="<?php echo site_url() ?>templates/import/user_2.png"></td>
     <td colspan="2"><h3>收件人資料：</h3><p>

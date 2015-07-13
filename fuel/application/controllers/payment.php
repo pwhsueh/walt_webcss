@@ -23,6 +23,7 @@ class Payment extends CI_Controller {
 		//bowen 先寫死 $member_id = 5;
 		$member_id = isset($user_data['member_id'])?$user_data['member_id']:"";
 		$city_result = $this->product_manage_model->get_code('city', ' AND parent_id=-1 ORDER BY code_key ASC');
+		$pay_result = $this->product_manage_model->get_code('pay_way', ' AND parent_id=-1 ORDER BY code_key ASC');
 		$ship_time_result = $this->product_manage_model->get_code('ship_time', ' AND parent_id=-1 ORDER BY code_key ASC');
 		
 		$member_result = $this->member_manage_model->get_member_detail_row($member_id);
@@ -30,6 +31,7 @@ class Payment extends CI_Controller {
 
 		$vars['get_payment_url'] = base_url()."payment/create";
 		$vars['city_result'] = $city_result;
+		$vars['pay_result'] = $pay_result;
 		$vars['ship_time_result'] = $ship_time_result;
 		// $vars['plan_id'] = $plan_id;
 		$vars['views'] = 'paymentinfo';
@@ -145,6 +147,7 @@ class Payment extends CI_Controller {
 			$order_addressee_addr 	= $this->input->get_post("order_addressee_addr");
 			$order_addressee_mobile = $this->input->get_post("order_addressee_mobile");
 			$order_ship_time		= $this->input->get_post("order_ship_time");
+			$pay_way                = $this->input->get_post("pay_way");
 			//bowen 先寫死 $member_id = 5; 
 			$member_id = isset($user_data['member_id'])?$user_data['member_id']:"";
 			 
@@ -160,7 +163,7 @@ class Payment extends CI_Controller {
 			{
 				$member_result = $this->member_manage_model->get_member_detail_row($member_id);
 				//交易單號 == order_id	
-				$trade_no = $this->order_manage_model->create_empty_order($member_id, $order_email, $order_name, $order_mobile, $order_city, $order_addr, $vat_number, $invoice_title, $order_addressee_name, $order_addressee_addr, $order_addressee_mobile, $product_plan, $order_ship_time);
+				$trade_no = $this->order_manage_model->create_empty_order($member_id, $order_email, $order_name, $order_mobile, $order_city, $order_addr, $vat_number, $invoice_title, $order_addressee_name, $order_addressee_addr, $order_addressee_mobile, $product_plan, $order_ship_time,$pay_way);
 				$cart = get_cookie("cart",TRUE);
 				if (isset($cart) && !empty($cart)) { 
 					$cart = stripslashes($cart);

@@ -97,9 +97,11 @@ class Order_manage extends Fuel_base_controller {
 		$base_url = base_url();
 
 		$pro_cate_results = $this->product_manage_model->get_code('product_cate', ' AND parent_id=-1 ORDER BY code_key ASC');
+		$pay_result = $this->order_manage_model->get_code('pay_way', ' AND parent_id=-1 ORDER BY code_key ASC');
 
 		$vars['pro_cate_results'] = $pro_cate_results;
 		$vars['view_name'] = $view_name;
+		$vars['pay_result'] = $pay_result;
 
 		$vars['get_prod_url'] = $base_url."fuel/order/get/prod/lists/";
 		$vars['get_plan_url'] = $base_url."fuel/order/get/plan/lists/";
@@ -126,8 +128,10 @@ class Order_manage extends Fuel_base_controller {
 		$oa_name = $this->input->get_post("oa_name");
 		$oa_mobile = $this->input->get_post("oa_mobile");
 		$oa_addr = $this->input->get_post("oa_addr");
+		$pay_way = $this->input->get_post("pay_way");
 
-		$success = $this->order_manage_model->do_add_order($order_name, $order_email, $order_mobile, $order_addr, $order_vat_num, $order_inv_title, $oa_name, $oa_mobile, $oa_addr, $pro_id, $pro_plan);
+		$success = $this->order_manage_model->do_add_order($order_name, $order_email, $order_mobile, $order_addr, $order_vat_num, $order_inv_title, 
+			$oa_name, $oa_mobile, $oa_addr, $pro_id, $pro_plan,$pay_way);
 
 		if($success)
 		{
@@ -149,6 +153,7 @@ class Order_manage extends Fuel_base_controller {
 		$ship_status_results = $this->order_manage_model->get_code('ship_status', ' AND parent_id=-1 ORDER BY code_key ASC');
 		$ship_time_results = $this->order_manage_model->get_code('ship_time', ' AND parent_id=-1 ORDER BY code_key ASC');
 		$inv_status_results = $this->order_manage_model->get_code('inv_status', ' AND parent_id=-1 ORDER BY code_key ASC');
+		$pay_result = $this->order_manage_model->get_code('pay_way', ' AND parent_id=-1 ORDER BY code_key ASC');
 		$member = $this->member_manage_model->get_member_detail($order_results->member_id);
 
 		$vars['member'] = $member;
@@ -160,6 +165,7 @@ class Order_manage extends Fuel_base_controller {
 		$vars['inv_status_results'] = $inv_status_results;
 		$vars['ship_time_results'] = $ship_time_results;
 		$vars['order_results'] = $order_results;
+		$vars['pay_result'] = $pay_result;
 		// $vars['mailing_results'] = $mailing_results;
 		$vars['order_dt_results'] = $order_dt_results;
 		// $vars['plan_results'] = $plan_results;
@@ -188,8 +194,10 @@ class Order_manage extends Fuel_base_controller {
 		$order_ship_status = $this->input->get_post("order_ship_status");
 		$order_inv_status = $this->input->get_post("order_inv_status");
 		$order_ship_time = $this->input->get_post("order_ship_time");
+		$pay_way = $this->input->get_post("pay_way");
 
-		$success = $this->order_manage_model->do_edit_order($order_id, $order_name, $order_email, $order_mobile, $order_addr, $order_vat_num, $order_inv_title, $oa_name, $oa_mobile, $oa_addr, $order_status, $order_ship_status, $order_inv_status, $plan_id, $order_ship_time);
+		$success = $this->order_manage_model->do_edit_order($order_id, $order_name, $order_email, $order_mobile, $order_addr, $order_vat_num, $order_inv_title,
+		$oa_name, $oa_mobile, $oa_addr, $order_status, $order_ship_status, $order_inv_status, $plan_id, $order_ship_time,$pay_way);
 
 		if($success)
 		{

@@ -67,7 +67,7 @@ class Order_manage_model extends MY_Model {
 		$sql = @"SELECT mo.order_id, mo.product_plan, mo.order_name, mo.order_email, mo.order_mobile, mo.order_addr, mo.order_vat_number, mo.order_invoice_title, mo.RtnCode, 
 						mo.order_status, mo.order_ship_status, mo.order_inv_status, mo.order_addressee_name, mo.order_addressee_addr, mo.order_ship_time,
 						mo.order_addressee_mobile, mo.order_note, mo.order_time, mo.order_price,
-						mo.account,mo.mailing_date,mo.account_nm,mo.mailing_amount,mo.member_id
+						mo.account,mo.mailing_date,mo.account_nm,mo.mailing_amount,mo.member_id,mo.pay_way
 				 FROM mod_order mo WHERE order_id=?";
 		$para = array($order_id);
 		$query = $this->db->query($sql, $para);
@@ -102,7 +102,8 @@ class Order_manage_model extends MY_Model {
 		return;
 	}
 
-	public function create_empty_order($member_id, $order_email, $order_name, $order_mobile, $order_city, $order_addr, $vat_number, $invoice_title, $order_addressee_name, $order_addressee_addr, $order_addressee_mobile, $product_plan, $order_ship_time)
+	public function create_empty_order($member_id, $order_email, $order_name, $order_mobile, $order_city, $order_addr, $vat_number, $invoice_title, 
+		$order_addressee_name, $order_addressee_addr, $order_addressee_mobile, $product_plan, $order_ship_time,$pay_way)
 	{
 		$today = date("Ymd");
 		$num = $this->get_conut_order();
@@ -130,10 +131,11 @@ class Order_manage_model extends MY_Model {
 										order_price,
 										RtnCode,
 										order_ship_time,
+										pay_way,
 										order_time,
 										modi_time
 										) 
-							VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, NOW(), NOW())";
+							VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, NOW(), NOW())";
 		$para = array(
 						$order_id,
 						$member_id,
@@ -153,7 +155,8 @@ class Order_manage_model extends MY_Model {
 						'inv_status_0001',
 						$product_plan->plan_price,
 						0,
-						$order_ship_time
+						$order_ship_time,
+						$pay_way
 					);
 		$success = $this->db->query($sql, $para);
 
@@ -188,7 +191,7 @@ class Order_manage_model extends MY_Model {
 		return $success;
 	}
 
-	public function do_add_order($order_name, $order_email, $order_mobile, $order_addr, $order_vat_num, $order_inv_title, $oa_name, $oa_mobile, $oa_addr, $pro_id, $pro_plan)
+	public function do_add_order($order_name, $order_email, $order_mobile, $order_addr, $order_vat_num, $order_inv_title, $oa_name, $oa_mobile, $oa_addr, $pro_id, $pro_plan,$pay_way)
 	{
 		$today = date("Ymd");
 		$num = $this->get_conut_order();
@@ -212,10 +215,11 @@ class Order_manage_model extends MY_Model {
 										order_inv_status,
 										product_id,
 										product_plan,
+										pay_way,
 										order_time,
 										modi_time
 										) 
-							VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, NOW(), NOW())";
+							VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ? ,? , NOW(), NOW())";
 		$para = array(
 						$order_id,
 						$order_name, 
@@ -232,6 +236,7 @@ class Order_manage_model extends MY_Model {
 						'inv_status_0001',
 						$pro_id,
 						$pro_plan,
+						$pay_way
 					);
 		$success = $this->db->query($sql, $para);
 
@@ -258,7 +263,8 @@ class Order_manage_model extends MY_Model {
 		return 0;
 	}
 
-	public function do_edit_order($order_id, $order_name, $order_email, $order_mobile, $order_addr, $order_vat_num, $order_inv_title, $oa_name, $oa_mobile, $oa_addr, $order_status, $order_ship_status, $order_inv_status, $plan_id, $order_ship_time)
+	public function do_edit_order($order_id, $order_name, $order_email, $order_mobile, $order_addr, $order_vat_num, $order_inv_title, $oa_name, $oa_mobile,
+	 $oa_addr, $order_status, $order_ship_status, $order_inv_status, $plan_id, $order_ship_time,$pay_way)
 	{
 		$sql = @"UPDATE mod_order SET order_name=?,
 										order_email=?,
@@ -274,8 +280,10 @@ class Order_manage_model extends MY_Model {
 										order_inv_status=?,
 										product_plan=?,
 										order_ship_time=?,
+										pay_way=?,
 										modi_time=NOW() WHERE order_id=?";
-		$para = array($order_name, $order_email, $order_mobile, $order_addr, $order_vat_num, $order_inv_title, $oa_name, $oa_mobile, $oa_addr, $order_status, $order_ship_status, $order_inv_status, $plan_id, $order_ship_time, $order_id);
+		$para = array($order_name, $order_email, $order_mobile, $order_addr, $order_vat_num, $order_inv_title, $oa_name, $oa_mobile, $oa_addr, $order_status, $order_ship_status, 
+			$order_inv_status, $plan_id, $order_ship_time, $pay_way,$order_id);
 		$success = $this->db->query($sql, $para);
 
 		return $success;

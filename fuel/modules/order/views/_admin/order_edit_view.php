@@ -228,6 +228,23 @@
 							</div>
 						</td>
 					</tr>
+					<tr>
+						<td>付款方式</td>
+						<td>
+							<div class="col-xs-3">
+							<select name="pay_way" class="form-control input-sm">
+								<?php
+									foreach($pay_result as $row)
+									{
+								?>
+										<option value="<?php echo $row->code_value1?>" <?php if($order_results->pay_way == $row->code_value1) echo "SELECTED";?>><?php echo $row->code_name?></option>
+								<?php
+									}
+								?>
+							</select>
+							</div>
+						</td>
+					</tr>
 					<!-- <tr style="display:none;" >
 						<td>送達時間</td>
 						<td>

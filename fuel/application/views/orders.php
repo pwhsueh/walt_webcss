@@ -57,19 +57,22 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
           未出貨
         <?php endif ?>  
       </td>
-      <td>
-        <?php if (!isset($value->account) || $value->account == ''): ?>
+      <td>    
+        <?php if ($value->pay_way == 'A'): ?>
+          貨到付款
+        <?php else: ?>
+           <?php if (!isset($value->account) || $value->account == ''): ?>
           
           <?php if ($temp_order_id != $value->order_id): ?>
             <?php $temp_order_id = $value->order_id; ?>
             <a href="<?php echo site_url()."orders/report/".$value->order_id ?>">匯款回報</a>
-          <?php else: ?>
+            <?php else: ?>
 
+            <?php endif ?>
+          <?php else: ?>
+            已回報匯款
           <?php endif ?>
-        <?php else: ?>
-          已回報匯款
-        <?php endif ?>
-        
+        <?php endif ?>  
       </td>
     </tr>
     <?php endforeach ?>

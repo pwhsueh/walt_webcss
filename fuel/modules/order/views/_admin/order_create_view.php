@@ -181,6 +181,23 @@
 						</td>
 					</tr>
 					<tr>
+						<td>付款方式</td>
+						<td>
+							<div class="col-xs-3">
+							<select name="pay_way" class="form-control input-sm">
+								<?php
+									foreach($pay_result as $row)
+									{
+								?>
+										<option value="<?php echo $row->code_value1?>"><?php echo $row->code_name?></option>
+								<?php
+									}
+								?>
+							</select>
+							</div>
+						</td>
+					</tr>
+					<tr>
 						<td colspan="2">
 							收件人資料&nbsp;&nbsp;<input type="checkbox" class="same_order"> 同訂購人資料
 						</td>
